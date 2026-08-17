@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raymine Hospital | Laboratory Report</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+
+:root{
+    --primary:#183B56;
+    --primary-2:#245A78;
+    --accent:#16A394;
+    --accent-dark:#0D7F74;
+    --accent-soft:#E9F7F5;
+    --primary-soft:#EDF3F7;
+    --ink:#17212B;
+    --muted:#66727D;
+    --line:#DCE4EA;
+    --surface:#FFFFFF;
+    --page:#F3F6F8;
+    --danger:#C93B4B;
+    --danger-soft:#FDECEF;
+    --shadow:0 22px 60px rgba(24,59,86,.10);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    min-height:100vh;
+    padding:28px 16px;
+    background:
+        radial-gradient(circle at 8% 0%, rgba(22,163,148,.07), transparent 28%),
+        radial-gradient(circle at 95% 8%, rgba(24,59,86,.07), transparent 24%),
+        var(--page);
+    color:var(--ink);
+    font-family:"DM Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:12px;
+}
+
+.app{max-width:1080px;margin:auto}
+
+.controls{
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+}
+.btn{
+    padding:11px 20px;
+    border-radius:10px;
+    font-weight:700;
+    font-size:13px;
+    border:1px solid transparent;
+    cursor:pointer;
+}
+.btn-outline{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-outline:hover{border-color:#B9C6D0}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-2)}
+
+.sheet{
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:26px;
+    position:relative;
+}
+.sheet::before{
+    content:"";
+    display:block;
+    height:6px;
+    background:linear-gradient(90deg,var(--primary) 0 78%,var(--accent) 78% 100%);
+}
+.inner{padding:26px 32px 24px}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:20px;
+    border-bottom:2px solid var(--primary);
+    padding-bottom:14px;
+    flex-wrap:wrap;
+}
+.brand-text .name{font-family:"Playfair Display",serif;font-weight:800;font-size:24px;color:var(--primary);letter-spacing:.02em}
+.brand-text .tagline{font-style:italic;color:var(--accent-dark);font-size:11.5px;margin-top:2px}
+.brand-text .contact{color:var(--muted);font-size:10.5px;margin-top:6px;line-height:1.5}
+
+.title-block{text-align:right}
+.title-block .eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--accent-dark);text-transform:uppercase}
+.title-block h1{font-family:"Playfair Display",serif;font-size:28px;color:var(--primary);letter-spacing:-.5px;margin-top:2px}
+.title-block .formname{font-size:12.5px;font-weight:700;color:var(--muted);margin-top:2px}
+.labno{margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:var(--primary-soft);border-radius:8px;padding:6px 10px}
+.labno label{font-size:10px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.06em}
+.labno input{border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:12px;width:110px;font-weight:700;color:var(--primary)}
+
+.patient-bar{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px 16px;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+}
+.patient-bar .field.wide{grid-column:span 2}
+.field label{display:block;font-size:9.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.field input, .field textarea{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:6px 8px;
+    font-size:12px;
+    font-family:inherit;
+    color:var(--ink);
+}
+.field textarea{resize:vertical;min-height:34px}
+
+.section-title{
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:#fff;
+    background:linear-gradient(90deg,var(--primary),var(--primary-2));
+    padding:8px 12px;
+    border-radius:8px;
+    margin:18px 0 8px;
+}
+.subgroup{
+    font-size:10.5px;
+    font-weight:800;
+    color:var(--accent-dark);
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    margin:12px 0 3px;
+    padding:3px 8px;
+    background:var(--accent-soft);
+    border-left:3px solid var(--accent-dark);
+    border-radius:3px;
+}
+
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+.cols-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 18px}
+.cols-4{display:grid;grid-template-columns:repeat(4,1fr);gap:0 16px}
+
+table.test-table{width:100%;border-collapse:collapse;table-layout:fixed}
+table.test-table td{
+    padding:3px 4px;
+    font-size:11px;
+    vertical-align:middle;
+    border-bottom:1px solid #F0F2F5;
+}
+table.test-table td.tn{width:38%;color:var(--ink)}
+table.test-table td.tv{width:70px}
+table.test-table td.tv input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:3px 4px;
+    font-size:11px;
+    text-align:center;
+}
+table.test-table td.tr-val{
+    color:var(--muted);
+    font-size:9px;
+    text-align:right;
+    white-space:normal;
+    word-break:break-word;
+    padding-left:6px;
+}
+table.test-table.two-col td.tn{width:60%}
+table.test-table.two-col td.tv{width:auto}
+
+input.out-of-range{
+    border-color:var(--danger)!important;
+    background:var(--danger-soft)!important;
+    color:var(--danger)!important;
+    font-weight:700!important;
+}
+input.warn-yellow{
+    border-color:#D8A73C!important;
+    background:#FFF6E0!important;
+    color:#8A6A1B!important;
+    font-weight:700!important;
+}
+
+.note{font-size:10px;color:var(--muted);font-style:italic;margin-top:6px}
+
+table.grid-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:4px}
+table.grid-table th{
+    background:var(--primary-soft);
+    color:var(--primary);
+    font-size:9.5px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    padding:6px 8px;
+    text-align:left;
+    border:1px solid var(--line);
+}
+table.grid-table td{
+    padding:4px 6px;
+    border:1px solid var(--line);
+}
+table.grid-table td input, table.grid-table td select{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:3px 5px;
+    font-size:11px;
+    text-align:center;
+}
+
+.two-field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+
+.footer-strip{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:14px;
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+}
+
+.abx-table{font-size:10px}
+.abx-table th, .abx-table td{padding:3px 6px}
+.abx-table td select{padding:2px}
+
+.legend{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);margin:6px 0}
+.legend .swatch{width:12px;height:12px;border-radius:3px;background:var(--danger-soft);border:1px solid var(--danger)}
+
+@media print{
+    body{background:#fff;padding:0;font-size:11px}
+    .app{max-width:100%}
+    .controls, .legend{display:none!important}
+    .sheet{box-shadow:none;border-radius:0;margin-bottom:0}
+    .sheet.page2{page-break-before:always}
+    .inner{padding:14px 16px}
+    input, textarea, select{
+        border:1px solid #7A8794!important;
+        background:transparent!important;
+    }
+    input.out-of-range{
+        border-color:var(--danger)!important;
+        background:var(--danger-soft)!important;
+    }
+    input.warn-yellow{
+        border-color:#D8A73C!important;
+        background:#FFF6E0!important;
+    }
+    @page{size:A4;margin:10mm}
+}
+@media (max-width:760px){
+    .patient-bar{grid-template-columns:1fr 1fr}
+    .cols-2, .cols-3, .cols-4{grid-template-columns:1fr}
+    .footer-strip{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+    <div class="controls no-print">
+        <button class="btn btn-outline" onclick="resetForm()">Reset</button>
+        <button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <!-- ============ PAGE 1: CLINICAL CHEMISTRY & HAEMATOLOGY ============ -->
+    <div class="sheet page1">
+        <div class="inner">
+            <div class="header">
+                <div class="brand-text">
+                    <div class="name">RAYMINE HOSPITAL LIMITED</div>
+                    <div class="tagline">affordable healthcare</div>
+                    <div class="contact">
+                        Plot 3 Chimchu Court, Besides Habitat Xclusive Inn, OPP Rivers State Fire Service Rumuodomaya, Port Harcourt.<br>
+                        0707 552 9758 &nbsp;|&nbsp; rayminehospital@gmail.com &nbsp;|&nbsp; www.rayminehealth.com
+                    </div>
+                </div>
+                <div class="title-block">
+                    <div class="eyebrow">Laboratory Investigations</div>
+                    <h1>REPORT</h1>
+                    <div class="formname">Clinical Chemistry &amp; Haematology</div>
+                    <div class="labno">
+                        <label>Lab No.</label>
+                        <input type="text" id="labNo1" oninput="syncField(this,'labNo2')">
+                    </div>
+                </div>
+            </div>
+
+            <div class="patient-bar">
+                <div class="field wide"><label>Patient's Name</label><input type="text" id="pName1" oninput="syncField(this,'pName2')"></div>
+                <div class="field"><label>Age</label><input type="text" id="pAge1" oninput="syncField(this,'pAge2')"></div>
+                <div class="field"><label>Sex</label><input type="text" id="pSex1" oninput="syncField(this,'pSex2')"></div>
+                <div class="field wide"><label>Address / Phone No.</label><input type="text" id="pAddr1" oninput="syncField(this,'pAddr2')"></div>
+                <div class="field wide"><label>Diagnosis</label><input type="text"></div>
+                <div class="field"><label>Test Required</label><input type="text"></div>
+                <div class="field"><label>Nature of Specimen</label><input type="text"></div>
+            </div>
+
+            <div class="legend"><span class="swatch"></span> Red = out of range / positive result &nbsp;&nbsp; <span class="swatch" style="background:#FFF6E0;border-color:#D8A73C"></span> Yellow = genotype AS (carrier)</div>
+
+            <div class="cols-2">
+                <!-- CLINICAL CHEMISTRY -->
+                <div>
+                    <div class="section-title">Clinical Chemistry</div>
+
+                    <table class="test-table">
+                        <tr><td class="tn">Fasting Blood Sugar (F.B.S)</td><td class="tv"><input type="text" data-min="4.2" data-max="6.4" oninput="checkRange(this)"></td><td class="tr-val">4.2–6.4 mmol/L (75–115 mg/dL)</td></tr>
+                        <tr><td class="tn">Random Blood Sugar (R.B.S)</td><td class="tv"><input type="text" data-min="7.1" data-max="11.1" oninput="checkRange(this)"></td><td class="tr-val">7.1–11.1 mmol/L</td></tr>
+                    </table>
+
+                    <div class="subgroup">Kidney Function Test (E/U/Cr)</div>
+                    <table class="test-table">
+                        <tr><td class="tn">Sodium (Na+)</td><td class="tv"><input type="text" data-min="135" data-max="146" oninput="checkRange(this)"></td><td class="tr-val">135–146 mmol/L</td></tr>
+                        <tr><td class="tn">Potassium (K+)</td><td class="tv"><input type="text" data-min="3.5" data-max="5.2" oninput="checkRange(this)"></td><td class="tr-val">3.5–5.2 mmol/L</td></tr>
+                        <tr><td class="tn">Bicarbonate (HCO3⁻)</td><td class="tv"><input type="text" data-min="24" data-max="33" oninput="checkRange(this)"></td><td class="tr-val">24–33 mmol/L</td></tr>
+                        <tr><td class="tn">Chloride (Cl⁻)</td><td class="tv"><input type="text" data-min="75" data-max="100" oninput="checkRange(this)"></td><td class="tr-val">75–100 mmol/L</td></tr>
+                        <tr><td class="tn">Calcium</td><td class="tv"><input type="text" data-min="2.3" data-max="2.7" oninput="checkRange(this)"></td><td class="tr-val">2.3–2.7 mmol/L</td></tr>
+                        <tr><td class="tn">Serum Creatinine</td><td class="tv"><input type="text" data-min="62" data-max="155" oninput="checkRange(this)"></td><td class="tr-val">88–135 (M) / 62–155 (F) µmol/L</td></tr>
+                        <tr><td class="tn">Blood Urea</td><td class="tv"><input type="text" data-min="2.5" data-max="7.0" oninput="checkRange(this)"></td><td class="tr-val">2.5–7.0 mmol/L</td></tr>
+                        <tr><td class="tn">Uric Acid</td><td class="tv"><input type="text" data-min="2.6" data-max="7.2" oninput="checkRange(this)"></td><td class="tr-val">3.5–7.2 (M) / 2.6–6.0 (F) mg/dL</td></tr>
+                    </table>
+
+                    <div class="subgroup">Liver Function Test (LFT)</div>
+                    <table class="test-table">
+                        <tr><td class="tn">Total Bilirubin</td><td class="tv"><input type="text" data-min="0" data-max="17" oninput="checkRange(this)"></td><td class="tr-val">Up to 17 µmol/L</td></tr>
+                        <tr><td class="tn">Direct (Conj.) Bilirubin</td><td class="tv"><input type="text" data-min="0" data-max="3.5" oninput="checkRange(this)"></td><td class="tr-val">Up to 3.5 µmol/L</td></tr>
+                        <tr><td class="tn">AST (SGOT)</td><td class="tv"><input type="text" data-min="10" data-max="40" oninput="checkRange(this)"></td><td class="tr-val">10–40 U/L</td></tr>
+                        <tr><td class="tn">ALT (SGPT)</td><td class="tv"><input type="text" data-min="7" data-max="56" oninput="checkRange(this)"></td><td class="tr-val">7–56 U/L</td></tr>
+                        <tr><td class="tn">Alk. Phosphatase (ALP)</td><td class="tv"><input type="text" data-min="40" data-max="130" oninput="checkRange(this)"></td><td class="tr-val">40–130 U/L</td></tr>
+                        <tr><td class="tn">GGT</td><td class="tv"><input type="text" data-min="9" data-max="48" oninput="checkRange(this)"></td><td class="tr-val">9–48 U/L</td></tr>
+                        <tr><td class="tn">Serum Total Protein</td><td class="tv"><input type="text" data-min="60" data-max="80" oninput="checkRange(this)"></td><td class="tr-val">60–80 g/dL</td></tr>
+                        <tr><td class="tn">Albumin</td><td class="tv"><input type="text" data-min="35" data-max="50" oninput="checkRange(this)"></td><td class="tr-val">35–50 g/L</td></tr>
+                    </table>
+
+                    <div class="subgroup">Fasting Lipid Profile (FLP)</div>
+                    <table class="test-table">
+                        <tr><td class="tn">Triglycerides</td><td class="tv"><input type="text" data-min="0.9" data-max="1.7" oninput="checkRange(this)"></td><td class="tr-val">0.9–1.7 mmol/L</td></tr>
+                        <tr><td class="tn">Total Cholesterol</td><td class="tv"><input type="text" data-min="3.8" data-max="6.2" oninput="checkRange(this)"></td><td class="tr-val">3.8–6.2 mmol/L</td></tr>
+                        <tr><td class="tn">HDL</td><td class="tv"><input type="text" data-min="1.0" oninput="checkRange(this)"></td><td class="tr-val">≥1.0 (M) / ≥1.3 (F) mmol/L</td></tr>
+                        <tr><td class="tn">LDL</td><td class="tv"><input type="text" data-max="2.6" oninput="checkRange(this)"></td><td class="tr-val">&lt; 2.6 mmol/L</td></tr>
+                    </table>
+
+                    <div class="subgroup">Prostate Specific Antigen</div>
+                    <table class="test-table">
+                        <tr><td class="tn">PSA</td><td class="tv"><input type="text" data-max="4.0" oninput="checkRange(this)"></td><td class="tr-val">&lt; 4.0 ng/mL</td></tr>
+                    </table>
+                </div>
+
+                <!-- HAEMATOLOGY -->
+                <div>
+                    <div class="section-title">Haematology</div>
+
+                    <table class="test-table">
+                        <tr><td class="tn">Haemoglobin</td><td class="tv"><input type="text" data-min="11" data-max="18" oninput="checkRange(this)"></td><td class="tr-val">12.5–18.0 (M) / 11–16 (F) g/dL</td></tr>
+                        <tr><td class="tn">PCV</td><td class="tv"><input type="text" data-min="36" data-max="54" oninput="checkRange(this)"></td><td class="tr-val">40–54 (M) / 36–47 (F) %</td></tr>
+                        <tr><td class="tn">Red Cell Count</td><td class="tv"><input type="text" data-min="4.1" data-max="5.5" oninput="checkRange(this)"></td><td class="tr-val">4.5–5.5 (M) / 4.1–5.1 (F) Mil/mm³</td></tr>
+                        <tr><td class="tn">White Cell Count</td><td class="tv"><input type="text" data-min="3.00" data-max="11.00" oninput="checkRange(this)"></td><td class="tr-val">3.00–11.00 x10³/mm³</td></tr>
+                    </table>
+
+                    <div class="subgroup">Differentials</div>
+                    <table class="test-table">
+                        <tr><td class="tn">Neutrophils</td><td class="tv"><input type="text" data-min="40" data-max="75" oninput="checkRange(this)"></td><td class="tr-val">40–75 %</td></tr>
+                        <tr><td class="tn">Lymphocytes</td><td class="tv"><input type="text" data-min="20" data-max="46" oninput="checkRange(this)"></td><td class="tr-val">20–46 %</td></tr>
+                        <tr><td class="tn">Eosinophils</td><td class="tv"><input type="text" data-min="1" data-max="6" oninput="checkRange(this)"></td><td class="tr-val">1–6 %</td></tr>
+                        <tr><td class="tn">Monocytes</td><td class="tv"><input type="text" data-min="2" data-max="10" oninput="checkRange(this)"></td><td class="tr-val">2–10 %</td></tr>
+                        <tr><td class="tn">Basophils</td><td class="tv"><input type="text" data-min="0" data-max="1" oninput="checkRange(this)"></td><td class="tr-val">0–1 %</td></tr>
+                    </table>
+
+                    <div class="subgroup">Other Haematology</div>
+                    <table class="test-table">
+                        <tr><td class="tn">ESR (Westergren)</td><td class="tv"><input type="text" data-min="0" data-max="7" oninput="checkRange(this)"></td><td class="tr-val">0–3 (M) / 0–7 (F) mm/hr</td></tr>
+                        <tr><td class="tn">Reticulocyte Count</td><td class="tv"><input type="text" data-min="0" data-max="2" oninput="checkRange(this)"></td><td class="tr-val">0–2 %</td></tr>
+                        <tr><td class="tn">Platelets Count</td><td class="tv"><input type="text" data-min="150000" data-max="400000" oninput="checkRange(this)"></td><td class="tr-val">150,000–400,000/mm³</td></tr>
+                        <tr><td class="tn">Total Eosinophil Count</td><td class="tv"><input type="text" data-min="40" data-max="440" oninput="checkRange(this)"></td><td class="tr-val">40–440/mm³</td></tr>
+                    </table>
+
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Sickling</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Microfilaria</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Malaria Parasite (MP)</td><td class="tv"><input type="text" oninput="checkMP(this)"></td></tr>
+                    </table>
+
+                    <div class="field" style="margin-top:8px">
+                        <label>Film Report / Comments</label>
+                        <textarea rows="2"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WIDAL -->
+            <div class="section-title">Widal Reaction Titre</div>
+            <table class="grid-table">
+                <tr><th>Antigen</th><th>"O"</th><th>"H"</th></tr>
+                <tr><td>S. Typhi</td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td>S. Paratyphi A</td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td>S. Paratyphi B</td><td><input type="text"></td><td><input type="text"></td></tr>
+                <tr><td>S. Paratyphi C</td><td><input type="text"></td><td><input type="text"></td></tr>
+            </table>
+            <div class="note">NB: Titre 1/80 is considered significant for enteric fever, especially for O-Ag titres.</div>
+
+            <!-- COAGULATION & SEROLOGY -->
+            <div class="section-title">Coagulation &amp; Serology</div>
+            <div class="two-field-row">
+                <div class="field"><label>Blood Group</label><input type="text"></div>
+                <div class="field"><label>Genotype</label><input type="text" oninput="checkGenotype(this)"></div>
+            </div>
+            <div class="cols-3">
+                <table class="test-table two-col">
+                    <tr><td class="tn">Coomb's Test (Direct)</td><td class="tv"><input type="text"></td></tr>
+                    <tr><td class="tn">Coomb's Test (Indirect)</td><td class="tv"><input type="text"></td></tr>
+                    <tr><td class="tn">Hepatitis B Antigen (HBsAg)</td><td class="tv"><input type="text"></td></tr>
+                    <tr><td class="tn">VDRL</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                </table>
+                <table class="test-table two-col">
+                    <tr><td class="tn">Pregnancy Test (Urine)</td><td class="tv"><input type="text"></td></tr>
+                    <tr><td class="tn">Pregnancy Test (Blood)</td><td class="tv"><input type="text"></td></tr>
+                    <tr><td class="tn">HIV I &amp; II Screening</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                </table>
+                <table class="test-table two-col">
+                    <tr><td class="tn">M.T.B. Antibodies</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                    <tr><td class="tn">H. pylori</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                    <tr><td class="tn">HCV</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                    <tr><td class="tn">HAV</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                    <tr><td class="tn">Others</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                </table>
+            </div>
+
+            <div class="field" style="margin-top:14px">
+                <label>Comments</label>
+                <textarea rows="2"></textarea>
+            </div>
+
+            <div class="footer-strip">
+                <div class="field"><label>Date</label><input type="date" id="date1" oninput="syncField(this,'date2')"></div>
+                <div class="field"><label>Assayed By</label><input type="text"></div>
+                <div class="field"><label>Med Lab Scientist</label><input type="text"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ PAGE 2: MICROBIOLOGY & PARASITOLOGY ============ -->
+    <div class="sheet page2">
+        <div class="inner">
+            <div class="header">
+                <div class="brand-text">
+                    <div class="name">RAYMINE HOSPITAL LIMITED</div>
+                    <div class="tagline">affordable healthcare</div>
+                    <div class="contact">
+                        Plot 3 Chimchu Court, Besides Habitat Xclusive Inn, OPP Rivers State Fire Service Rumuodomaya, Port Harcourt.<br>
+                        0707 552 9758 &nbsp;|&nbsp; rayminehospital@gmail.com &nbsp;|&nbsp; www.rayminehealth.com
+                    </div>
+                </div>
+                <div class="title-block">
+                    <div class="eyebrow">Laboratory Investigations</div>
+                    <h1>REPORT</h1>
+                    <div class="formname">Microbiology &amp; Parasitology</div>
+                    <div class="labno">
+                        <label>Lab No.</label>
+                        <input type="text" id="labNo2" oninput="syncField(this,'labNo1')">
+                    </div>
+                </div>
+            </div>
+
+            <div class="patient-bar">
+                <div class="field wide"><label>Patient's Name</label><input type="text" id="pName2" oninput="syncField(this,'pName1')"></div>
+                <div class="field"><label>Age</label><input type="text" id="pAge2" oninput="syncField(this,'pAge1')"></div>
+                <div class="field"><label>Sex</label><input type="text" id="pSex2" oninput="syncField(this,'pSex1')"></div>
+                <div class="field wide"><label>Address / Phone No.</label><input type="text" id="pAddr2" oninput="syncField(this,'pAddr1')"></div>
+                <div class="field wide"><label>Hospital</label><input type="text"></div>
+                <div class="field"><label>Test Required</label><input type="text"></div>
+                <div class="field"><label>Nature of Specimen</label><input type="text"></div>
+            </div>
+
+            <div class="cols-4">
+                <div>
+                    <div class="section-title">Urine</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Appearance</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Blood</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Urobilinogen</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Bilirubin</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Specific Gravity</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Protein</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Nitrite</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Ketone</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Ascorbic Acid</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Glucose</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">pH</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                    <div class="subgroup">Microscopy</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Epithelial Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Pus Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Bacteria</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Crystals</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Casts</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">R.B.C.S.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Others</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Culture</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                </div>
+
+                <div>
+                    <div class="section-title">Faeces</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Appearance</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Colour</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Worm Segments</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Mucus</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Blood</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                    <div class="subgroup">Microscopy</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Culture</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Occult Blood</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+
+                    <div class="section-title" style="margin-top:16px">Sputum</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Appearance</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Pus Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.P.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.N.R.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">A.F.B.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Culture</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                </div>
+
+                <div>
+                    <div class="section-title">Swabs</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Epithelial Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Yeast Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Pus Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">T. Vaginalis</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">R.B.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.P.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.N.D.P.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.N.R.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Culture</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                </div>
+
+                <div>
+                    <div class="section-title">Seminal Fluid</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Time Produced</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Time Received</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Time Examined</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                    <table class="test-table">
+                        <tr><td class="tn">Volume</td><td class="tv"><input type="text" data-min="3" data-max="5" oninput="checkRange(this)"></td><td class="tr-val">3–5 mL</td></tr>
+                        <tr><td class="tn">Colour</td><td class="tv"><input type="text"></td><td class="tr-val">Greyish/Pale Yellow</td></tr>
+                        <tr><td class="tn">pH</td><td class="tv"><input type="text"></td><td class="tr-val">Alkaline</td></tr>
+                        <tr><td class="tn">Consistency</td><td class="tv"><input type="text"></td><td class="tr-val">Gelatinous</td></tr>
+                        <tr><td class="tn">Liquefaction Time</td><td class="tv"><input type="text" data-min="0" data-max="20" oninput="checkRange(this)"></td><td class="tr-val">0–20 min</td></tr>
+                        <tr><td class="tn">Morphology (Normal)</td><td class="tv"><input type="text" data-min="75" data-max="80" oninput="checkRange(this)"></td><td class="tr-val">75–80%</td></tr>
+                        <tr><td class="tn">Motility (Active)</td><td class="tv"><input type="text" data-min="75" data-max="80" oninput="checkRange(this)"></td><td class="tr-val">75–80%</td></tr>
+                        <tr><td class="tn">Total Sperm Count</td><td class="tv"><input type="text" data-min="60" data-max="300" oninput="checkRange(this)"></td><td class="tr-val">60–300 x10⁶/mL</td></tr>
+                    </table>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Morphology (Abnormal)</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Motility (Sluggish)</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Motility (Dead)</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Pus Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Crystals</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Casts</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Bacteria</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.P.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">R.B.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Culture</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ANTIBIOTIC SENSITIVITY -->
+            <div class="section-title">Antibiotic Sensitivity</div>
+            <table class="grid-table abx-table" id="abxTable">
+                <tr><th>Antibiotic</th><th>Organism 1</th><th>Organism 2</th></tr>
+            </table>
+            <div class="note">S = Sensitive &nbsp;&nbsp; R = Resistant</div>
+            <div class="field" style="margin-top:10px"><label>Comment</label><textarea rows="2"></textarea></div>
+
+            <div class="footer-strip">
+                <div class="field"><label>Date</label><input type="date" id="date2" oninput="syncField(this,'date1')"></div>
+                <div class="field"><label>Assayed By</label><input type="text"></div>
+                <div class="field"><label>Med Lab Scientist</label><input type="text"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function syncField(source, targetId){
+    const target = document.getElementById(targetId);
+    if(target && target.value !== source.value) target.value = source.value;
+}
+
+function checkRange(input){
+    const hasMin = input.dataset.min !== undefined;
+    const hasMax = input.dataset.max !== undefined;
+    if(!hasMin && !hasMax) return;
+    const raw = input.value.replace(/,/g,'').trim();
+    if(raw === ""){ input.classList.remove('out-of-range'); return; }
+    const val = parseFloat(raw);
+    if(isNaN(val)){ input.classList.remove('out-of-range'); return; }
+    const min = hasMin ? parseFloat(input.dataset.min) : -Infinity;
+    const max = hasMax ? parseFloat(input.dataset.max) : Infinity;
+    if(val < min || val > max){
+        input.classList.add('out-of-range');
+    } else {
+        input.classList.remove('out-of-range');
+    }
+}
+
+function checkGenotype(input){
+    const v = input.value.trim().toUpperCase();
+    input.classList.remove('out-of-range','warn-yellow');
+    if(v === 'AS'){
+        input.classList.add('warn-yellow');
+    } else if(v === 'SS'){
+        input.classList.add('out-of-range');
+    }
+}
+
+function checkPositive(input){
+    const v = input.value.trim().toLowerCase();
+    input.classList.remove('out-of-range');
+    if(v === 'positive' || v === 'pos' || v === 'reactive' || v === '+'){
+        input.classList.add('out-of-range');
+    }
+}
+
+function checkMP(input){
+    const v = input.value.trim().toLowerCase();
+    input.classList.remove('out-of-range');
+    if(v === '+' || v === '++' || v === 'positive' || v === 'pos'){
+        input.classList.add('out-of-range');
+    }
+}
+
+const ANTIBIOTICS = [
+    "Sparfloxacin","Amoxycilline","Chloramphenicol","Levofloxacin","Ceporex (Cephalexin)",
+    "L-Flox","Ampiclox","Ampicillin","Ofloxacin","Augmentin","Tarivid","Gentamicin",
+    "Nalidixic Acid","Rifampin","Erythromycin","Norfloxacin","Ciproxin (Ciprofloxacin)",
+    "Peflaxin (Pefloxacin)","Streptomycin","Septrin","Cefuroxime","Ceftazidime",
+    "Azithromycin","Ceftriaxone"
+];
+
+function sensSelect(){
+    return `<select><option value=""></option><option value="S">S</option><option value="R">R</option></select>`;
+}
+
+(function buildAbxTable(){
+    const table = document.getElementById("abxTable");
+    ANTIBIOTICS.forEach(name => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${name}</td><td>${sensSelect()}</td><td>${sensSelect()}</td>`;
+        table.appendChild(tr);
+    });
+})();
+
+function resetForm(){
+    document.querySelectorAll("input[type=text], input[type=date], textarea").forEach(el => el.value = "");
+    document.querySelectorAll("select").forEach(el => el.value = "");
+    document.querySelectorAll("input.out-of-range").forEach(el => el.classList.remove('out-of-range'));
+    document.querySelectorAll("input.warn-yellow").forEach(el => el.classList.remove('warn-yellow'));
+}
+</script>
+</body>
+</html>
