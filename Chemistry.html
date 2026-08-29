@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raymine Hospital | Clinical Chemistry Report</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+
+:root{
+    --primary:#183B56;
+    --primary-2:#245A78;
+    --accent:#16A394;
+    --accent-dark:#0D7F74;
+    --accent-soft:#E9F7F5;
+    --primary-soft:#EDF3F7;
+    --ink:#17212B;
+    --muted:#66727D;
+    --line:#DCE4EA;
+    --surface:#FFFFFF;
+    --page:#F3F6F8;
+    --danger:#C93B4B;
+    --danger-soft:#FDECEF;
+    --warn:#D8A73C;
+    --warn-soft:#FFF6E0;
+    --shadow:0 22px 60px rgba(24,59,86,.10);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    min-height:100vh;
+    padding:28px 16px;
+    background:
+        radial-gradient(circle at 8% 0%, rgba(22,163,148,.07), transparent 28%),
+        radial-gradient(circle at 95% 8%, rgba(24,59,86,.07), transparent 24%),
+        var(--page);
+    color:var(--ink);
+    font-family:"DM Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:12px;
+}
+
+.app{max-width:1080px;margin:auto}
+
+.controls{
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+}
+.btn{
+    padding:11px 20px;
+    border-radius:10px;
+    font-weight:700;
+    font-size:13px;
+    border:1px solid transparent;
+    cursor:pointer;
+}
+.btn-outline{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-outline:hover{border-color:#B9C6D0}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-2)}
+
+.sheet{
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:26px;
+    position:relative;
+}
+.sheet::before{
+    content:"";
+    display:block;
+    height:6px;
+    background:linear-gradient(90deg,var(--primary) 0 78%,var(--accent) 78% 100%);
+}
+.inner{padding:26px 32px 24px}
+
+.header{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+    border-bottom:2px solid var(--primary);
+    padding-bottom:8px;
+}
+.brand-text .name{font-family:"Playfair Display",serif;font-weight:800;font-size:24px;line-height:1.15;color:var(--primary);letter-spacing:.02em}
+.brand-text .tagline{font-style:italic;color:var(--accent-dark);font-size:11.5px;margin-top:2px;line-height:1.2}
+.brand-text .contact{color:var(--muted);font-size:10.5px;margin-top:6px;line-height:1.4}
+
+.title-block{
+    text-align:left;
+    width:100%;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+}
+.title-block .eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--accent-dark);text-transform:uppercase;line-height:1.2}
+.title-block h1{font-family:"Playfair Display",serif;font-size:26px;line-height:1.15;color:var(--primary);letter-spacing:-.5px;margin-top:2px}
+.title-block .formname{font-size:12.5px;font-weight:700;color:var(--muted);margin-top:2px;line-height:1.2}
+.labno{margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:var(--primary-soft);border-radius:8px;padding:6px 10px}
+.labno label{font-size:10px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;line-height:1.2}
+.labno input{border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:12px;line-height:1.2;width:130px;font-weight:700;color:var(--primary)}
+
+.patient-bar{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px 16px;
+    padding:8px 0;
+    border-bottom:1px solid var(--line);
+}
+.patient-bar .field.wide{grid-column:span 2}
+.field label{display:block;font-size:9.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;line-height:1.2}
+.field input, .field textarea{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:6px 8px;
+    font-size:12px;
+    line-height:1.2;
+    font-family:inherit;
+    color:var(--ink);
+}
+.field textarea{resize:vertical;min-height:24px}
+
+.section-title{
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:#fff;
+    background:linear-gradient(90deg,var(--primary),var(--primary-2));
+    padding:8px 12px;
+    line-height:1.2;
+    border-radius:8px;
+    margin:8px 0 4px;
+}
+.subgroup{
+    font-size:10.5px;
+    font-weight:800;
+    color:var(--accent-dark);
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    margin:6px 0 2px;
+    padding:3px 8px;
+    line-height:1.2;
+    background:var(--accent-soft);
+    border-left:3px solid var(--accent-dark);
+    border-radius:3px;
+}
+
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.cols-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 18px}
+
+table.test-table{width:100%;border-collapse:collapse;table-layout:fixed}
+table.test-table td{
+    padding:2px 4px;
+    font-size:11px;
+    line-height:1.15;
+    vertical-align:middle;
+    border-bottom:1px solid #F0F2F5;
+}
+table.test-table td.tn{width:44%;color:var(--ink)}
+table.test-table td.tv{width:52px;position:relative}
+table.test-table td.tv input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:3px 16px 3px 3px;
+    font-size:11px;
+    line-height:1.15;
+    text-align:center;
+}
+table.test-table td.tv .flag{
+    position:absolute;
+    top:2px;
+    right:3px;
+    font-size:9px;
+    font-weight:800;
+    pointer-events:none;
+}
+table.test-table td.tv .flag.high{color:var(--danger)}
+table.test-table td.tv .flag.low{color:var(--primary-2)}
+table.test-table td.tr-val{
+    color:var(--muted);
+    font-size:8.5px;
+    line-height:1.15;
+    text-align:right;
+    white-space:normal;
+    word-break:break-word;
+    padding-left:4px;
+}
+
+input.out-of-range{
+    border-color:var(--danger)!important;
+    background:var(--danger-soft)!important;
+    color:var(--danger)!important;
+    font-weight:700!important;
+}
+input.low-range{
+    border-color:var(--primary-2)!important;
+    background:var(--primary-soft)!important;
+    color:var(--primary-2)!important;
+    font-weight:700!important;
+}
+
+.note{font-size:10px;color:var(--muted);font-style:italic;margin-top:4px}
+.legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin:6px 0}
+.legend .item{display:flex;align-items:center;gap:6px}
+.legend .swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+.footer-strip{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:14px;
+    margin-top:6px;
+    padding-top:6px;
+    border-top:1px solid var(--line);
+}
+
+@media print{
+    body{background:#fff;padding:0;font-size:11px}
+    .app{max-width:100%}
+    .controls, .legend{display:none!important}
+    .sheet{box-shadow:none;border-radius:0;margin-bottom:0}
+    .inner{padding:16px 20px 10px}
+    input, textarea{
+        border:1px solid #7A8794!important;
+        background:transparent!important;
+    }
+    input.out-of-range{border-color:var(--danger)!important;background:var(--danger-soft)!important}
+    input.low-range{border-color:var(--primary-2)!important;background:var(--primary-soft)!important}
+    @page{size:A4;margin:10mm}
+}
+@media screen and (max-width:760px){
+    .patient-bar{grid-template-columns:1fr 1fr}
+    .cols-2, .cols-3{grid-template-columns:1fr}
+    .footer-strip{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+    <div class="controls no-print">
+        <button class="btn btn-outline" onclick="resetForm()">Reset</button>
+        <button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <div class="sheet page1">
+        <div class="inner">
+            <div class="header">
+                <div class="brand-text">
+                    <div class="name">RAYMINE HOSPITAL LIMITED</div>
+                    <div class="tagline">affordable healthcare</div>
+                    <div class="contact">
+                        Plot 3 Chimchu Court, Besides Habitat Xclusive Inn, OPP Rivers State Fire Service Rumuodomaya, Port Harcourt.<br>
+                        0707 552 9758 &nbsp;|&nbsp; rayminehospital@gmail.com &nbsp;|&nbsp; www.rayminehealth.com
+                    </div>
+                </div>
+                <div class="title-block">
+                    <div class="eyebrow">Laboratory Investigations</div>
+                    <h1>REPORT</h1>
+                    <div class="formname">Renal, Liver &amp; Lipid Profile (EUC / LFT / FLP)</div>
+                    <div class="labno">
+                        <label>Patient ID / Lab No.</label>
+                        <input type="text" placeholder="e.g. RHL/S/0024">
+                    </div>
+                </div>
+            </div>
+
+            <div class="patient-bar">
+                <div class="field wide"><label>Patient's Name</label><input type="text"></div>
+                <div class="field"><label>Age</label><input type="text"></div>
+                <div class="field"><label>Sex</label><input type="text"></div>
+                <div class="field wide"><label>Address / Phone No.</label><input type="text"></div>
+                <div class="field"><label>Test Date &amp; Time</label><input type="text" placeholder="DD-MM-YYYY HH:MM"></div>
+                <div class="field"><label>Specimen</label><input type="text" placeholder="Serum"></div>
+                <div class="field"><label>Fasting Status</label><input type="text" placeholder="Fasting / Non-Fasting"></div>
+                <div class="field wide"><label>Diagnosis / Clinical Notes</label><input type="text"></div>
+            </div>
+
+            <div class="legend">
+                <div class="item"><span class="swatch" style="background:var(--danger-soft);border:1px solid var(--danger)"></span> High (H) &ndash; above reference range</div>
+                <div class="item"><span class="swatch" style="background:var(--primary-soft);border:1px solid var(--primary-2)"></span> Low (L) &ndash; below reference range</div>
+            </div>
+
+            <div class="section-title">Clinical Chemistry</div>
+
+            <div class="cols-2">
+                <!-- EUC -->
+                <div>
+                    <div class="subgroup">Electrolytes, Urea &amp; Creatinine (EUC)</div>
+                    <table class="test-table">
+                        <tr><td class="tn">Sodium (Na+)</td><td class="tv"><input type="text" data-min="135" data-max="146" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">135&ndash;146 mmol/L</td></tr>
+                        <tr><td class="tn">Potassium (K+)</td><td class="tv"><input type="text" data-min="3.5" data-max="5.2" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">3.5&ndash;5.2 mmol/L</td></tr>
+                        <tr><td class="tn">Bicarbonate (HCO3&#8315;)</td><td class="tv"><input type="text" data-min="24" data-max="33" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">24&ndash;33 mmol/L</td></tr>
+                        <tr><td class="tn">Chloride (Cl&#8315;)</td><td class="tv"><input type="text" data-min="75" data-max="100" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">75&ndash;100 mmol/L</td></tr>
+                        <tr><td class="tn">Calcium</td><td class="tv"><input type="text" data-min="2.3" data-max="2.7" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">2.3&ndash;2.7 mmol/L</td></tr>
+                        <tr><td class="tn">Serum Creatinine</td><td class="tv"><input type="text" data-min="62" data-max="155" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">88&ndash;135(M) / 62&ndash;155(F) &micro;mol/L</td></tr>
+                        <tr><td class="tn">Blood Urea</td><td class="tv"><input type="text" data-min="2.5" data-max="7.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">2.5&ndash;7.0 mmol/L</td></tr>
+                        <tr><td class="tn">Uric Acid</td><td class="tv"><input type="text" data-min="2.6" data-max="7.2" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">3.5&ndash;7.2(M) / 2.6&ndash;6.0(F) mg/dL</td></tr>
+                    </table>
+                </div>
+
+                <!-- LFT -->
+                <div>
+                    <div class="subgroup">Liver Function Test (LFT)</div>
+                    <table class="test-table">
+                        <tr><td class="tn">Total Bilirubin</td><td class="tv"><input type="text" data-min="0" data-max="17" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">Up to 17 &micro;mol/L</td></tr>
+                        <tr><td class="tn">Direct (Conj.) Bilirubin</td><td class="tv"><input type="text" data-min="0" data-max="3.5" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">Up to 3.5 &micro;mol/L</td></tr>
+                        <tr><td class="tn">AST (SGOT)</td><td class="tv"><input type="text" data-min="10" data-max="40" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">10&ndash;40 U/L</td></tr>
+                        <tr><td class="tn">ALT (SGPT)</td><td class="tv"><input type="text" data-min="7" data-max="56" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">7&ndash;56 U/L</td></tr>
+                        <tr><td class="tn">Alk. Phosphatase (ALP)</td><td class="tv"><input type="text" data-min="40" data-max="130" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">40&ndash;130 U/L</td></tr>
+                        <tr><td class="tn">GGT</td><td class="tv"><input type="text" data-min="9" data-max="48" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">9&ndash;48 U/L</td></tr>
+                        <tr><td class="tn">Serum Total Protein</td><td class="tv"><input type="text" data-min="60" data-max="80" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">60&ndash;80 g/dL</td></tr>
+                        <tr><td class="tn">Albumin</td><td class="tv"><input type="text" data-min="35" data-max="50" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">35&ndash;50 g/L</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subgroup" style="margin-top:10px">Fasting Lipid Profile (FLP)</div>
+            <table class="test-table" style="table-layout:auto">
+                <colgroup><col style="width:26%"><col style="width:12%"><col></colgroup>
+                <tr><td class="tn">Triglycerides</td><td class="tv"><input type="text" data-min="0.9" data-max="1.7" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">0.9&ndash;1.7 mmol/L</td></tr>
+                <tr><td class="tn">Total Cholesterol</td><td class="tv"><input type="text" data-min="3.8" data-max="6.2" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">3.8&ndash;6.2 mmol/L</td></tr>
+                <tr><td class="tn">HDL</td><td class="tv"><input type="text" data-min="1.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">&ge;1.0 (M) / &ge;1.3 (F) mmol/L</td></tr>
+                <tr><td class="tn">LDL</td><td class="tv"><input type="text" data-max="2.6" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">&lt; 2.6 mmol/L</td></tr>
+            </table>
+            <div class="note">FLP results are only valid on a confirmed 10&ndash;12 hour fasting sample &ndash; see Fasting Status above.</div>
+
+            <div class="field" style="margin-top:10px">
+                <label>Comments</label>
+                <textarea rows="2"></textarea>
+            </div>
+
+            <div class="note">This test result only accounts for this test sample.</div>
+
+            <div class="footer-strip">
+                <div class="field"><label>Date</label><input type="date"></div>
+                <div class="field"><label>Assayed By</label><input type="text"></div>
+                <div class="field"><label>Med Lab Scientist</label><input type="text"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function checkRange(input){
+    const flag = input.parentElement.querySelector('.flag');
+    input.classList.remove('out-of-range','low-range');
+    if(flag) flag.textContent = '';
+    if(flag) flag.className = 'flag';
+
+    const hasMin = input.dataset.min !== undefined;
+    const hasMax = input.dataset.max !== undefined;
+    if(!hasMin && !hasMax) return;
+
+    const raw = input.value.replace(/,/g,'').trim();
+    if(raw === "") return;
+
+    const val = parseFloat(raw);
+    if(isNaN(val)) return;
+
+    const min = hasMin ? parseFloat(input.dataset.min) : -Infinity;
+    const max = hasMax ? parseFloat(input.dataset.max) : Infinity;
+
+    if(val > max){
+        input.classList.add('out-of-range');
+        if(flag){ flag.textContent = 'H'; flag.className = 'flag high'; }
+    } else if(val < min){
+        input.classList.add('low-range');
+        if(flag){ flag.textContent = 'L'; flag.className = 'flag low'; }
+    }
+}
+
+function resetForm(){
+    document.querySelectorAll("input[type=text], input[type=date], textarea").forEach(el => el.value = "");
+    document.querySelectorAll("input.out-of-range").forEach(el => el.classList.remove('out-of-range'));
+    document.querySelectorAll("input.low-range").forEach(el => el.classList.remove('low-range'));
+    document.querySelectorAll(".flag").forEach(el => { el.textContent = ''; el.className = 'flag'; });
+}
+</script>
+</body>
+</html>

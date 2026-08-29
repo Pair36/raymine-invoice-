@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raymine Hospital | Full Blood Count (FBC) Report</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+
+:root{
+    --primary:#183B56;
+    --primary-2:#245A78;
+    --accent:#16A394;
+    --accent-dark:#0D7F74;
+    --accent-soft:#E9F7F5;
+    --primary-soft:#EDF3F7;
+    --ink:#17212B;
+    --muted:#66727D;
+    --line:#DCE4EA;
+    --surface:#FFFFFF;
+    --page:#F3F6F8;
+    --danger:#C93B4B;
+    --danger-soft:#FDECEF;
+    --warn:#D8A73C;
+    --warn-soft:#FFF6E0;
+    --shadow:0 22px 60px rgba(24,59,86,.10);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    min-height:100vh;
+    padding:28px 16px;
+    background:
+        radial-gradient(circle at 8% 0%, rgba(22,163,148,.07), transparent 28%),
+        radial-gradient(circle at 95% 8%, rgba(24,59,86,.07), transparent 24%),
+        var(--page);
+    color:var(--ink);
+    font-family:"DM Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:12px;
+}
+
+.app{max-width:1080px;margin:auto}
+
+.controls{
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+}
+.btn{
+    padding:11px 20px;
+    border-radius:10px;
+    font-weight:700;
+    font-size:13px;
+    border:1px solid transparent;
+    cursor:pointer;
+}
+.btn-outline{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-outline:hover{border-color:#B9C6D0}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-2)}
+
+.sheet{
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:26px;
+    position:relative;
+}
+.sheet::before{
+    content:"";
+    display:block;
+    height:6px;
+    background:linear-gradient(90deg,var(--primary) 0 78%,var(--accent) 78% 100%);
+}
+.inner{padding:26px 32px 24px}
+
+.header{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+    border-bottom:2px solid var(--primary);
+    padding-bottom:14px;
+}
+.brand-text .name{font-family:"Playfair Display",serif;font-weight:800;font-size:24px;color:var(--primary);letter-spacing:.02em}
+.brand-text .tagline{font-style:italic;color:var(--accent-dark);font-size:11.5px;margin-top:2px}
+.brand-text .contact{color:var(--muted);font-size:10.5px;margin-top:6px;line-height:1.5}
+
+.title-block{
+    text-align:left;
+    width:100%;
+    padding-top:12px;
+    border-top:1px solid var(--line);
+}
+.title-block .eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--accent-dark);text-transform:uppercase}
+.title-block h1{font-family:"Playfair Display",serif;font-size:26px;color:var(--primary);letter-spacing:-.5px;margin-top:2px}
+.title-block .formname{font-size:12.5px;font-weight:700;color:var(--muted);margin-top:2px}
+.labno{margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:var(--primary-soft);border-radius:8px;padding:6px 10px}
+.labno label{font-size:10px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.06em}
+.labno input{border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:12px;width:130px;font-weight:700;color:var(--primary)}
+
+.patient-bar{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px 16px;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+}
+.patient-bar .field.wide{grid-column:span 2}
+.field label{display:block;font-size:9.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px}
+.field input, .field textarea{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:6px 8px;
+    font-size:12px;
+    font-family:inherit;
+    color:var(--ink);
+}
+.field textarea{resize:vertical;min-height:34px}
+
+.section-title{
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:#fff;
+    background:linear-gradient(90deg,var(--primary),var(--primary-2));
+    padding:8px 12px;
+    border-radius:8px;
+    margin:18px 0 8px;
+}
+.subgroup{
+    font-size:10.5px;
+    font-weight:800;
+    color:var(--accent-dark);
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    margin:12px 0 3px;
+    padding:3px 8px;
+    background:var(--accent-soft);
+    border-left:3px solid var(--accent-dark);
+    border-radius:3px;
+}
+
+.cols-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 18px}
+
+table.test-table{width:100%;border-collapse:collapse;table-layout:fixed}
+table.test-table td{
+    padding:4px 4px;
+    font-size:11px;
+    vertical-align:middle;
+    border-bottom:1px solid #F0F2F5;
+}
+table.test-table td.tn{width:52%;color:var(--ink)}
+table.test-table td.tv{width:62px;position:relative}
+table.test-table td.tv input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:3px 18px 3px 4px;
+    font-size:11px;
+    text-align:center;
+}
+table.test-table td.tv .flag{
+    position:absolute;
+    top:2px;
+    right:4px;
+    font-size:9px;
+    font-weight:800;
+    pointer-events:none;
+}
+table.test-table td.tv .flag.high{color:var(--danger)}
+table.test-table td.tv .flag.low{color:var(--primary-2)}
+table.test-table td.tr-val{
+    color:var(--muted);
+    font-size:9px;
+    text-align:right;
+    white-space:normal;
+    word-break:break-word;
+    padding-left:5px;
+}
+
+input.out-of-range{
+    border-color:var(--danger)!important;
+    background:var(--danger-soft)!important;
+    color:var(--danger)!important;
+    font-weight:700!important;
+}
+input.low-range{
+    border-color:var(--primary-2)!important;
+    background:var(--primary-soft)!important;
+    color:var(--primary-2)!important;
+    font-weight:700!important;
+}
+
+.note{font-size:10px;color:var(--muted);font-style:italic;margin-top:6px}
+.legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin:6px 0}
+.legend .item{display:flex;align-items:center;gap:6px}
+.legend .swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+.footer-strip{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:14px;
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+}
+
+@media print{
+    body{background:#fff;padding:0;font-size:11px}
+    .app{max-width:100%}
+    .controls, .legend{display:none!important}
+    .sheet{box-shadow:none;border-radius:0;margin-bottom:0}
+    .inner{padding:14px 16px}
+    input, textarea{
+        border:1px solid #7A8794!important;
+        background:transparent!important;
+    }
+    input.out-of-range{border-color:var(--danger)!important;background:var(--danger-soft)!important}
+    input.low-range{border-color:var(--primary-2)!important;background:var(--primary-soft)!important}
+    @page{size:A4;margin:10mm}
+}
+@media (max-width:760px){
+    .patient-bar{grid-template-columns:1fr 1fr}
+    .cols-3{grid-template-columns:1fr}
+    .footer-strip{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+    <div class="controls no-print">
+        <button class="btn btn-outline" onclick="resetForm()">Reset</button>
+        <button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <div class="sheet page1">
+        <div class="inner">
+            <div class="header">
+                <div class="brand-text">
+                    <div class="name">RAYMINE HOSPITAL LIMITED</div>
+                    <div class="tagline">affordable healthcare</div>
+                    <div class="contact">
+                        Plot 3 Chimchu Court, Besides Habitat Xclusive Inn, OPP Rivers State Fire Service Rumuodomaya, Port Harcourt.<br>
+                        0707 552 9758 &nbsp;|&nbsp; rayminehospital@gmail.com &nbsp;|&nbsp; www.rayminehealth.com
+                    </div>
+                </div>
+                <div class="title-block">
+                    <div class="eyebrow">Laboratory Investigations</div>
+                    <h1>REPORT</h1>
+                    <div class="formname">Full Blood Count (FBC) &ndash; Haematology Auto Analyzer</div>
+                    <div class="labno">
+                        <label>Patient ID / Lab No.</label>
+                        <input type="text" placeholder="e.g. RHL/S/0024">
+                    </div>
+                </div>
+            </div>
+
+            <div class="patient-bar">
+                <div class="field wide"><label>Patient's Name</label><input type="text"></div>
+                <div class="field"><label>Age</label><input type="text"></div>
+                <div class="field"><label>Sex</label><input type="text"></div>
+                <div class="field wide"><label>Address / Phone No.</label><input type="text"></div>
+                <div class="field"><label>Test Date &amp; Time</label><input type="text" placeholder="DD-MM-YYYY HH:MM"></div>
+                <div class="field"><label>Specimen</label><input type="text" placeholder="EDTA Whole Blood"></div>
+                <div class="field wide"><label>Diagnosis / Clinical Notes</label><input type="text"></div>
+            </div>
+
+            <div class="legend">
+                <div class="item"><span class="swatch" style="background:var(--danger-soft);border:1px solid var(--danger)"></span> High (H) &ndash; above reference range</div>
+                <div class="item"><span class="swatch" style="background:var(--primary-soft);border:1px solid var(--primary-2)"></span> Low (L) &ndash; below reference range</div>
+            </div>
+
+            <div class="section-title">Full Blood Count</div>
+
+            <div class="cols-3">
+                <!-- WBC RELATED -->
+                <div>
+                    <div class="subgroup">White Cell Count</div>
+                    <table class="test-table">
+                        <tr><td class="tn">White Blood Cell Count (WBC)</td><td class="tv"><input type="text" data-min="4.00" data-max="12.00" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">4.00&ndash;12.00 x10<sup>9</sup>/L</td></tr>
+                        <tr><td class="tn">Lymphocyte Count (Lym#)</td><td class="tv"><input type="text" data-min="0.80" data-max="7.00" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">0.80&ndash;7.00 x10<sup>9</sup>/L</td></tr>
+                        <tr><td class="tn">Mid Cell Count (Mid#)</td><td class="tv"><input type="text" data-min="0.10" data-max="1.80" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">0.10&ndash;1.80 x10<sup>9</sup>/L</td></tr>
+                        <tr><td class="tn">Granulocyte Count (Gran#)</td><td class="tv"><input type="text" data-min="2.00" data-max="7.80" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">2.00&ndash;7.80 x10<sup>9</sup>/L</td></tr>
+                        <tr><td class="tn">Lymphocyte % (Lym%)</td><td class="tv"><input type="text" data-min="20.0" data-max="60.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">20.0&ndash;60.0 %</td></tr>
+                        <tr><td class="tn">Mid Cell % (Mid%)</td><td class="tv"><input type="text" data-min="1.0" data-max="15.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">1.0&ndash;15.0 %</td></tr>
+                        <tr><td class="tn">Granulocyte % (Gran%)</td><td class="tv"><input type="text" data-min="50.0" data-max="70.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">50.0&ndash;70.0 %</td></tr>
+                    </table>
+                </div>
+
+                <!-- RBC RELATED -->
+                <div>
+                    <div class="subgroup">Red Cell Count</div>
+                    <table class="test-table">
+                        <tr><td class="tn">Red Blood Cell Count (RBC)</td><td class="tv"><input type="text" data-min="3.50" data-max="5.20" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">3.50&ndash;5.20 x10<sup>12</sup>/L</td></tr>
+                        <tr><td class="tn">Haemoglobin (HGB)</td><td class="tv"><input type="text" data-min="12.0" data-max="16.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">12.0&ndash;16.0 g/dL</td></tr>
+                        <tr><td class="tn">Haematocrit (HCT)</td><td class="tv"><input type="text" data-min="35.0" data-max="49.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">35.0&ndash;49.0 %</td></tr>
+                        <tr><td class="tn">Mean Corpuscular Volume (MCV)</td><td class="tv"><input type="text" data-min="80.0" data-max="100.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">80.0&ndash;100.0 fL</td></tr>
+                        <tr><td class="tn">Mean Corpuscular Hb (MCH)</td><td class="tv"><input type="text" data-min="27.0" data-max="34.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">27.0&ndash;34.0 pg</td></tr>
+                        <tr><td class="tn">Mean Corpuscular Hb Conc. (MCHC)</td><td class="tv"><input type="text" data-min="31.0" data-max="37.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">31.0&ndash;37.0 g/dL</td></tr>
+                        <tr><td class="tn">RBC Distribution Width-CV (RDW-CV)</td><td class="tv"><input type="text" data-min="11.0" data-max="16.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">11.0&ndash;16.0 %</td></tr>
+                        <tr><td class="tn">RBC Distribution Width-SD (RDW-SD)</td><td class="tv"><input type="text" data-min="35.0" data-max="56.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">35.0&ndash;56.0 fL</td></tr>
+                    </table>
+                </div>
+
+                <!-- PLT RELATED -->
+                <div>
+                    <div class="subgroup">Platelet Count</div>
+                    <table class="test-table">
+                        <tr><td class="tn">Platelet Count (PLT)</td><td class="tv"><input type="text" data-min="100" data-max="300" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">100&ndash;300 x10<sup>9</sup>/L</td></tr>
+                        <tr><td class="tn">Mean Platelet Volume (MPV)</td><td class="tv"><input type="text" data-min="6.5" data-max="12.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">6.5&ndash;12.0 fL</td></tr>
+                        <tr><td class="tn">Platelet Dist. Width-CV (PDW-CV)</td><td class="tv"><input type="text" data-min="9.0" data-max="16.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">9.0&ndash;16.0 %</td></tr>
+                        <tr><td class="tn">Platelet Dist. Width-SD (PDW-SD)</td><td class="tv"><input type="text" data-min="9.0" data-max="17.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">9.0&ndash;17.0 fL</td></tr>
+                        <tr><td class="tn">Plateletcrit (PCT)</td><td class="tv"><input type="text" data-min="1.08" data-max="2.82" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">1.08&ndash;2.82 mL/L</td></tr>
+                        <tr><td class="tn">Platelet Large Cell Count (P-LCC)</td><td class="tv"><input type="text" data-min="30" data-max="90" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">30&ndash;90 x10<sup>9</sup>/L</td></tr>
+                        <tr><td class="tn">Platelet Large Cell Ratio (P-LCR)</td><td class="tv"><input type="text" data-min="11.0" data-max="45.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">11.0&ndash;45.0 %</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="field" style="margin-top:14px">
+                <label>Film Report / Comments</label>
+                <textarea rows="2"></textarea>
+            </div>
+
+            <div class="note">This test result only accounts for this test sample.</div>
+
+            <div class="footer-strip">
+                <div class="field"><label>Date</label><input type="date"></div>
+                <div class="field"><label>Assayed By</label><input type="text"></div>
+                <div class="field"><label>Med Lab Scientist</label><input type="text"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function checkRange(input){
+    const flag = input.parentElement.querySelector('.flag');
+    input.classList.remove('out-of-range','low-range');
+    if(flag) flag.textContent = '';
+    if(flag) flag.className = 'flag';
+
+    const hasMin = input.dataset.min !== undefined;
+    const hasMax = input.dataset.max !== undefined;
+    if(!hasMin && !hasMax) return;
+
+    const raw = input.value.replace(/,/g,'').trim();
+    if(raw === "") return;
+
+    const val = parseFloat(raw);
+    if(isNaN(val)) return;
+
+    const min = hasMin ? parseFloat(input.dataset.min) : -Infinity;
+    const max = hasMax ? parseFloat(input.dataset.max) : Infinity;
+
+    if(val > max){
+        input.classList.add('out-of-range');
+        if(flag){ flag.textContent = 'H'; flag.className = 'flag high'; }
+    } else if(val < min){
+        input.classList.add('low-range');
+        if(flag){ flag.textContent = 'L'; flag.className = 'flag low'; }
+    }
+}
+
+function resetForm(){
+    document.querySelectorAll("input[type=text], input[type=date], textarea").forEach(el => el.value = "");
+    document.querySelectorAll("input.out-of-range").forEach(el => el.classList.remove('out-of-range'));
+    document.querySelectorAll("input.low-range").forEach(el => el.classList.remove('low-range'));
+    document.querySelectorAll(".flag").forEach(el => { el.textContent = ''; el.className = 'flag'; });
+}
+</script>
+</body>
+</html>
