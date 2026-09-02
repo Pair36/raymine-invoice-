@@ -168,14 +168,19 @@ table.test-table td.tv input{
 }
 table.test-table td.tv .flag{
     position:absolute;
-    top:2px;
-    right:4px;
+    top:50%;
+    right:2px;
+    transform:translateY(-50%);
     font-size:9px;
     font-weight:800;
+    line-height:1;
+    padding:1.5px 4px;
+    border-radius:4px;
+    color:#fff;
     pointer-events:none;
 }
-table.test-table td.tv .flag.high{color:var(--danger)}
-table.test-table td.tv .flag.low{color:var(--danger)}
+table.test-table td.tv .flag.high{background:var(--danger)}
+table.test-table td.tv .flag.low{background:var(--danger)}
 table.test-table td.tr-val{
     color:var(--muted);
     font-size:9px;
