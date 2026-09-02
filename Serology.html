@@ -181,7 +181,7 @@ table.test-table td.tv .flag{
     pointer-events:none;
 }
 table.test-table td.tv .flag.high{color:var(--danger)}
-table.test-table td.tv .flag.low{color:var(--primary-2)}
+table.test-table td.tv .flag.low{color:var(--danger)}
 table.test-table td.tr-val{
     color:var(--muted);
     font-size:8.5px;
@@ -199,9 +199,9 @@ input.out-of-range{
     font-weight:700!important;
 }
 input.low-range{
-    border-color:var(--primary-2)!important;
-    background:var(--primary-soft)!important;
-    color:var(--primary-2)!important;
+    border-color:var(--danger)!important;
+    background:var(--danger-soft)!important;
+    color:var(--danger)!important;
     font-weight:700!important;
 }
 input.warn-yellow{
@@ -269,7 +269,7 @@ table.grid-table td input{
         background:transparent!important;
     }
     input.out-of-range{border-color:var(--danger)!important;background:var(--danger-soft)!important}
-    input.low-range{border-color:var(--primary-2)!important;background:var(--primary-soft)!important}
+    input.low-range{border-color:var(--danger)!important;background:var(--danger-soft)!important}
     input.warn-yellow{border-color:#D8A73C!important;background:#FFF6E0!important}
     @page{size:A4;margin:10mm}
 }
@@ -293,7 +293,7 @@ table.grid-table td input{
             <div class="header">
                 <div class="brand-text">
                     <div class="name">RAYMINE HOSPITAL LIMITED</div>
-                    <div class="tagline">Compassionate Care, Trusted Health</div>
+                    <div class="tagline">Compassionate Care, Trusted Health.</div>
                     <div class="contact">
                         Plot 3 Chimchu Court, Besides Habitat Xclusive Inn, OPP Rivers State Fire Service Rumuodomaya, Port Harcourt.<br>
                         0707 552 9758 &nbsp;|&nbsp; rayminehospital@gmail.com &nbsp;|&nbsp; www.rayminehealth.com
@@ -315,7 +315,7 @@ table.grid-table td input{
                 <div class="field"><label>Age</label><input type="text"></div>
                 <div class="field"><label>Sex</label><input type="text"></div>
                 <div class="field wide"><label>Address / Phone No.</label><input type="text"></div>
-                <div class="field"><label>Test Date &amp; Time</label><input type="text" placeholder="DD-MM-YYYY HH:MM"></div>
+                <div class="field"><label>Test Date &amp; Time</label><input type="datetime-local"></div>
                 <div class="field"><label>Specimen</label><input type="text" placeholder="Blood / Serum"></div>
                 <div class="field wide"><label>Diagnosis / Clinical Notes</label><input type="text"></div>
             </div>
