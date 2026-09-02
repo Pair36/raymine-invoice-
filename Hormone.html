@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Raymine Hospital | Clinical Chemistry Report</title>
+<title>Raymine Hospital | Hormone Profile & Reproductive Health Report</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
 
@@ -82,32 +82,32 @@ body{
     display:flex;
     flex-direction:column;
     align-items:flex-start;
-    gap:8px;
+    gap:2px;
     border-bottom:2px solid var(--primary);
-    padding-bottom:8px;
+    padding-bottom:2px;
 }
 .brand-text .name{font-family:"Playfair Display",serif;font-weight:800;font-size:24px;line-height:1.15;color:var(--primary);letter-spacing:.02em}
 .brand-text .tagline{font-style:italic;color:var(--accent-dark);font-size:11.5px;margin-top:2px;line-height:1.2}
-.brand-text .contact{color:var(--muted);font-size:10.5px;margin-top:6px;line-height:1.4}
+.brand-text .contact{color:var(--muted);font-size:10.5px;margin-top:3px;line-height:1.25}
 
 .title-block{
     text-align:left;
     width:100%;
-    padding-top:12px;
+    padding-top:5px;
     border-top:1px solid var(--line);
 }
 .title-block .eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--accent-dark);text-transform:uppercase;line-height:1.2}
 .title-block h1{font-family:"Playfair Display",serif;font-size:26px;line-height:1.15;color:var(--primary);letter-spacing:-.5px;margin-top:2px}
 .title-block .formname{font-size:12.5px;font-weight:700;color:var(--muted);margin-top:2px;line-height:1.2}
-.labno{margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:var(--primary-soft);border-radius:8px;padding:6px 10px}
+.labno{margin-top:4px;display:inline-flex;align-items:center;gap:6px;background:var(--primary-soft);border-radius:8px;padding:5px 10px}
 .labno label{font-size:10px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;line-height:1.2}
 .labno input{border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:12px;line-height:1.2;width:130px;font-weight:700;color:var(--primary)}
 
 .patient-bar{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:6px 16px;
-    padding:8px 0;
+    gap:2px 10px;
+    padding:3px 0;
     border-bottom:1px solid var(--line);
 }
 .patient-bar .field.wide{grid-column:span 2}
@@ -134,7 +134,7 @@ body{
     padding:8px 12px;
     line-height:1.2;
     border-radius:8px;
-    margin:8px 0 4px;
+    margin:4px 0 2px;
 }
 .subgroup{
     font-size:10.5px;
@@ -142,7 +142,7 @@ body{
     color:var(--accent-dark);
     text-transform:uppercase;
     letter-spacing:.05em;
-    margin:6px 0 2px;
+    margin:3px 0 1px;
     padding:3px 8px;
     line-height:1.2;
     background:var(--accent-soft);
@@ -155,7 +155,7 @@ body{
 
 table.test-table{width:100%;border-collapse:collapse;table-layout:fixed}
 table.test-table td{
-    padding:2px 4px;
+    padding:1.2px 4px;
     font-size:11px;
     line-height:1.15;
     vertical-align:middle;
@@ -204,9 +204,48 @@ input.low-range{
     color:var(--danger)!important;
     font-weight:700!important;
 }
+input.warn-yellow{
+    border-color:#D8A73C!important;
+    background:#FFF6E0!important;
+    color:#8A6A1B!important;
+    font-weight:700!important;
+}
 
-.note{font-size:10px;color:var(--muted);font-style:italic;margin-top:4px}
-.legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin:6px 0}
+table.test-table.two-col td.tn{width:60%}
+table.test-table.two-col td.tv{width:auto}
+
+table.grid-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:4px}
+table.grid-table th{
+    background:var(--primary-soft);
+    color:var(--primary);
+    font-size:9.5px;
+    line-height:1.2;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    padding:4px 8px;
+    text-align:left;
+    border:1px solid var(--line);
+}
+table.grid-table td{
+    padding:2px 6px;
+    font-size:11px;
+    line-height:1.15;
+    border:1px solid var(--line);
+}
+table.grid-table td input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:2px 5px;
+    font-size:11px;
+    line-height:1.15;
+    text-align:center;
+}
+
+.two-field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 1px}
+
+.note{font-size:10px;color:var(--muted);font-style:italic;margin-top:3px}
+.legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin:4px 0}
 .legend .item{display:flex;align-items:center;gap:6px}
 .legend .swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
 
@@ -214,8 +253,8 @@ input.low-range{
     display:grid;
     grid-template-columns:1fr 1fr 1fr;
     gap:14px;
-    margin-top:6px;
-    padding-top:6px;
+    margin-top:3px;
+    padding-top:3px;
     border-top:1px solid var(--line);
 }
 
@@ -231,6 +270,7 @@ input.low-range{
     }
     input.out-of-range{border-color:var(--danger)!important;background:var(--danger-soft)!important}
     input.low-range{border-color:var(--danger)!important;background:var(--danger-soft)!important}
+    input.warn-yellow{border-color:#D8A73C!important;background:#FFF6E0!important}
     @page{size:A4;margin:10mm}
 }
 @media screen and (max-width:760px){
@@ -262,7 +302,7 @@ input.low-range{
                 <div class="title-block">
                     <div class="eyebrow">Laboratory Investigations</div>
                     <h1>REPORT</h1>
-                    <div class="formname">Renal, Liver &amp; Lipid Profile (EUC / LFT / FLP)</div>
+                    <div class="formname">Hormone Profile &amp; Reproductive Health</div>
                     <div class="labno">
                         <label>Patient ID / Lab No.</label>
                         <input type="text" placeholder="e.g. RHL/S/0024">
@@ -276,8 +316,7 @@ input.low-range{
                 <div class="field"><label>Sex</label><input type="text"></div>
                 <div class="field wide"><label>Address / Phone No.</label><input type="text"></div>
                 <div class="field"><label>Test Date &amp; Time</label><input type="datetime-local"></div>
-                <div class="field"><label>Specimen</label><input type="text" placeholder="Serum"></div>
-                <div class="field"><label>Fasting Status</label><input type="text" placeholder="Fasting / Non-Fasting"></div>
+                <div class="field"><label>Specimen</label><input type="text" placeholder="Serum / Semen"></div>
                 <div class="field wide"><label>Diagnosis / Clinical Notes</label><input type="text"></div>
             </div>
 
@@ -286,53 +325,73 @@ input.low-range{
                 <div class="item"><span class="swatch" style="background:var(--danger-soft);border:1px solid var(--danger)"></span> Low (L) &ndash; below reference range</div>
             </div>
 
-            <div class="section-title">Clinical Chemistry</div>
+            <div class="section-title">Hormone Profile &amp; Reproductive Health</div>
+            <div class="cols-2">
+                <div>
+                    <div class="subgroup">Reproductive Hormones</div>
+                    <table class="test-table" style="table-layout:auto">
+                        <colgroup><col style="width:34%"><col style="width:16%"><col></colgroup>
+                        <tr><td class="tn">FSH</td><td class="tv"><input type="text" data-min="1.5" data-max="12.5" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">1.5&ndash;12.4(M) / 3.5&ndash;12.5(F, foll.) mIU/mL</td></tr>
+                        <tr><td class="tn">LH</td><td class="tv"><input type="text" data-min="1.7" data-max="12.6" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">1.7&ndash;8.6(M) / 2.4&ndash;12.6(F, foll.) mIU/mL</td></tr>
+                        <tr><td class="tn">Prolactin</td><td class="tv"><input type="text" data-min="4.0" data-max="23.3" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">4.0&ndash;15.2(M) / 4.8&ndash;23.3(F) ng/mL</td></tr>
+                        <tr><td class="tn">Estradiol (E2)</td><td class="tv"><input type="text" data-min="7.6" data-max="166" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">7.6&ndash;42.6(M) / 12.5&ndash;166(F, foll.) pg/mL</td></tr>
+                        <tr><td class="tn">Progesterone</td><td class="tv"><input type="text" data-min="0.2" data-max="1.5" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">0.2&ndash;1.4(M) / 0.2&ndash;1.5(F, foll.) ng/mL</td></tr>
+                        <tr><td class="tn">Testosterone (Total)</td><td class="tv"><input type="text" data-min="0.1" data-max="8.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">2.8&ndash;8.0(M) / 0.1&ndash;0.75(F) ng/mL</td></tr>
+                        <tr><td class="tn">PSA</td><td class="tv"><input type="text" data-max="4.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">&lt; 4.0 ng/mL (M)</td></tr>
+                    </table>
+                </div>
+                <div>
+                    <div class="subgroup">Thyroid Panel</div>
+                    <table class="test-table" style="table-layout:auto">
+                        <colgroup><col style="width:34%"><col style="width:16%"><col></colgroup>
+                        <tr><td class="tn">TSH</td><td class="tv"><input type="text" data-min="0.4" data-max="4.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">0.4&ndash;4.0 mIU/L</td></tr>
+                        <tr><td class="tn">T4 (Total)</td><td class="tv"><input type="text" data-min="4.5" data-max="12.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">4.5&ndash;12.0 &micro;g/dL</td></tr>
+                        <tr><td class="tn">T3 (Total)</td><td class="tv"><input type="text" data-min="80" data-max="200" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">80&ndash;200 ng/dL</td></tr>
+                        <tr><td class="tn">Free T4 (FT4)</td><td class="tv"><input type="text" data-min="0.8" data-max="1.8" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">0.8&ndash;1.8 ng/dL</td></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="note">FSH, LH, Estradiol &amp; Progesterone ranges shown are for the female follicular phase &ndash; these vary with cycle day, pregnancy and menopause; correlate clinically.</div>
 
             <div class="cols-2">
-                <!-- EUC -->
                 <div>
-                    <div class="subgroup">Electrolytes, Urea &amp; Creatinine (EUC)</div>
-                    <table class="test-table">
-                        <tr><td class="tn">Sodium (Na+)</td><td class="tv"><input type="text" data-min="135" data-max="146" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">135&ndash;146 mmol/L</td></tr>
-                        <tr><td class="tn">Potassium (K+)</td><td class="tv"><input type="text" data-min="3.5" data-max="5.2" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">3.5&ndash;5.2 mmol/L</td></tr>
-                        <tr><td class="tn">Bicarbonate (HCO3&#8315;)</td><td class="tv"><input type="text" data-min="24" data-max="33" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">24&ndash;33 mmol/L</td></tr>
-                        <tr><td class="tn">Chloride (Cl&#8315;)</td><td class="tv"><input type="text" data-min="75" data-max="100" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">75&ndash;100 mmol/L</td></tr>
-                        <tr><td class="tn">Calcium</td><td class="tv"><input type="text" data-min="2.3" data-max="2.7" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">2.3&ndash;2.7 mmol/L</td></tr>
-                        <tr><td class="tn">Serum Creatinine</td><td class="tv"><input type="text" data-min="62" data-max="155" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">88&ndash;135(M) / 62&ndash;155(F) &micro;mol/L</td></tr>
-                        <tr><td class="tn">Blood Urea</td><td class="tv"><input type="text" data-min="2.5" data-max="7.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">2.5&ndash;7.0 mmol/L</td></tr>
-                        <tr><td class="tn">Uric Acid</td><td class="tv"><input type="text" data-min="2.6" data-max="7.2" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">3.5&ndash;7.2(M) / 2.6&ndash;6.0(F) mg/dL</td></tr>
+                    <div class="subgroup">Sample Timing &amp; Macroscopic Parameters</div>
+                    <table class="test-table" style="table-layout:auto">
+                        <colgroup><col style="width:44%"><col style="width:14%"><col></colgroup>
+                        <tr><td class="tn">Time Produced</td><td class="tv"><input type="text"></td><td class="tr-val"></td></tr>
+                        <tr><td class="tn">Time Received</td><td class="tv"><input type="text"></td><td class="tr-val"></td></tr>
+                        <tr><td class="tn">Time Examined</td><td class="tv"><input type="text"></td><td class="tr-val"></td></tr>
+                        <tr><td class="tn">Volume</td><td class="tv"><input type="text" data-min="3" data-max="5" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">3&ndash;5 mL</td></tr>
+                        <tr><td class="tn">Colour</td><td class="tv"><input type="text"></td><td class="tr-val">Greyish/Pale Yellow</td></tr>
+                        <tr><td class="tn">pH</td><td class="tv"><input type="text"></td><td class="tr-val">Alkaline</td></tr>
+                        <tr><td class="tn">Consistency</td><td class="tv"><input type="text"></td><td class="tr-val">Gelatinous</td></tr>
+                        <tr><td class="tn">Liquefaction Time</td><td class="tv"><input type="text" data-min="0" data-max="20" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">0&ndash;20 min</td></tr>
+                        <tr><td class="tn">Morphology (Normal)</td><td class="tv"><input type="text" data-min="75" data-max="80" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">75&ndash;80%</td></tr>
+                        <tr><td class="tn">Motility (Active)</td><td class="tv"><input type="text" data-min="75" data-max="80" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">75&ndash;80%</td></tr>
+                        <tr><td class="tn">Total Sperm Count</td><td class="tv"><input type="text" data-min="60" data-max="300" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">60&ndash;300 x10<sup>6</sup>/mL</td></tr>
                     </table>
                 </div>
 
-                <!-- LFT -->
                 <div>
-                    <div class="subgroup">Liver Function Test (LFT)</div>
-                    <table class="test-table">
-                        <tr><td class="tn">Total Bilirubin</td><td class="tv"><input type="text" data-min="0" data-max="17" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">Up to 17 &micro;mol/L</td></tr>
-                        <tr><td class="tn">Direct (Conj.) Bilirubin</td><td class="tv"><input type="text" data-min="0" data-max="3.5" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">Up to 3.5 &micro;mol/L</td></tr>
-                        <tr><td class="tn">AST (SGOT)</td><td class="tv"><input type="text" data-min="10" data-max="40" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">10&ndash;40 U/L</td></tr>
-                        <tr><td class="tn">ALT (SGPT)</td><td class="tv"><input type="text" data-min="7" data-max="56" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">7&ndash;56 U/L</td></tr>
-                        <tr><td class="tn">Alk. Phosphatase (ALP)</td><td class="tv"><input type="text" data-min="40" data-max="130" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">40&ndash;130 U/L</td></tr>
-                        <tr><td class="tn">GGT</td><td class="tv"><input type="text" data-min="9" data-max="48" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">9&ndash;48 U/L</td></tr>
-                        <tr><td class="tn">Serum Total Protein</td><td class="tv"><input type="text" data-min="60" data-max="80" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">60&ndash;80 g/dL</td></tr>
-                        <tr><td class="tn">Albumin</td><td class="tv"><input type="text" data-min="35" data-max="50" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">35&ndash;50 g/L</td></tr>
+                    <div class="subgroup">Microscopy &amp; Additional Findings</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Morphology (Abnormal)</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Motility (Sluggish)</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Motility (Dead)</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Pus Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Crystals</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Casts</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Bacteria</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.P.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">R.B.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Culture</td><td class="tv"><input type="text"></td></tr>
                     </table>
                 </div>
             </div>
 
-            <div class="subgroup" style="margin-top:10px">Fasting Lipid Profile (FLP)</div>
-            <table class="test-table" style="table-layout:auto">
-                <colgroup><col style="width:26%"><col style="width:12%"><col></colgroup>
-                <tr><td class="tn">Triglycerides</td><td class="tv"><input type="text" data-min="0.9" data-max="1.7" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">0.9&ndash;1.7 mmol/L</td></tr>
-                <tr><td class="tn">Total Cholesterol</td><td class="tv"><input type="text" data-min="3.8" data-max="6.2" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">3.8&ndash;6.2 mmol/L</td></tr>
-                <tr><td class="tn">HDL</td><td class="tv"><input type="text" data-min="1.0" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">&ge;1.0 (M) / &ge;1.3 (F) mmol/L</td></tr>
-                <tr><td class="tn">LDL</td><td class="tv"><input type="text" data-max="2.6" oninput="checkRange(this)"><span class="flag"></span></td><td class="tr-val">&lt; 2.6 mmol/L</td></tr>
-            </table>
-            <div class="note">FLP results are only valid on a confirmed 10&ndash;12 hour fasting sample &ndash; see Fasting Status above.</div>
-
-            <div class="field" style="margin-top:10px">
+            <div class="field" style="margin-top:6px">
                 <label>Comments</label>
-                <textarea rows="2"></textarea>
+                <textarea rows="1"></textarea>
             </div>
 
             <div class="note">This test result only accounts for this test sample.</div>
@@ -375,6 +434,10 @@ function checkRange(input){
         if(flag){ flag.textContent = 'L'; flag.className = 'flag low'; }
     }
 }
+
+document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('input[data-min], input[data-max]').forEach(checkRange);
+});
 
 function resetForm(){
     document.querySelectorAll("input[type=text], input[type=date], textarea").forEach(el => el.value = "");

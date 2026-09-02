@@ -175,7 +175,7 @@ table.test-table td.tv .flag{
     pointer-events:none;
 }
 table.test-table td.tv .flag.high{color:var(--danger)}
-table.test-table td.tv .flag.low{color:var(--primary-2)}
+table.test-table td.tv .flag.low{color:var(--danger)}
 table.test-table td.tr-val{
     color:var(--muted);
     font-size:9px;
@@ -192,9 +192,9 @@ input.out-of-range{
     font-weight:700!important;
 }
 input.low-range{
-    border-color:var(--primary-2)!important;
-    background:var(--primary-soft)!important;
-    color:var(--primary-2)!important;
+    border-color:var(--danger)!important;
+    background:var(--danger-soft)!important;
+    color:var(--danger)!important;
     font-weight:700!important;
 }
 
@@ -223,10 +223,10 @@ input.low-range{
         background:transparent!important;
     }
     input.out-of-range{border-color:var(--danger)!important;background:var(--danger-soft)!important}
-    input.low-range{border-color:var(--primary-2)!important;background:var(--primary-soft)!important}
+    input.low-range{border-color:var(--danger)!important;background:var(--danger-soft)!important}
     @page{size:A4;margin:10mm}
 }
-@media (max-width:760px){
+@media screen and (max-width:760px){
     .patient-bar{grid-template-columns:1fr 1fr}
     .cols-3{grid-template-columns:1fr}
     .footer-strip{grid-template-columns:1fr}
@@ -246,7 +246,7 @@ input.low-range{
             <div class="header">
                 <div class="brand-text">
                     <div class="name">RAYMINE HOSPITAL LIMITED</div>
-                    <div class="tagline">Compassionate Care, Trusted Health</div>
+                    <div class="tagline">Compassionate Care, Trusted Health.</div>
                     <div class="contact">
                         Plot 3 Chimchu Court, Besides Habitat Xclusive Inn, OPP Rivers State Fire Service Rumuodomaya, Port Harcourt.<br>
                         0707 552 9758 &nbsp;|&nbsp; rayminehospital@gmail.com &nbsp;|&nbsp; www.rayminehealth.com
@@ -268,14 +268,14 @@ input.low-range{
                 <div class="field"><label>Age</label><input type="text"></div>
                 <div class="field"><label>Sex</label><input type="text"></div>
                 <div class="field wide"><label>Address / Phone No.</label><input type="text"></div>
-                <div class="field"><label>Test Date &amp; Time</label><input type="text" placeholder="DD-MM-YYYY HH:MM"></div>
+                <div class="field"><label>Test Date &amp; Time</label><input type="datetime-local"></div>
                 <div class="field"><label>Specimen</label><input type="text" placeholder="EDTA Whole Blood"></div>
                 <div class="field wide"><label>Diagnosis / Clinical Notes</label><input type="text"></div>
             </div>
 
             <div class="legend">
                 <div class="item"><span class="swatch" style="background:var(--danger-soft);border:1px solid var(--danger)"></span> High (H) &ndash; above reference range</div>
-                <div class="item"><span class="swatch" style="background:var(--primary-soft);border:1px solid var(--primary-2)"></span> Low (L) &ndash; below reference range</div>
+                <div class="item"><span class="swatch" style="background:var(--danger-soft);border:1px solid var(--danger)"></span> Low (L) &ndash; below reference range</div>
             </div>
 
             <div class="section-title">Full Blood Count</div>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raymine Hospital | Microbiology & Parasitology Report</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap');
+
+:root{
+    --primary:#183B56;
+    --primary-2:#245A78;
+    --accent:#16A394;
+    --accent-dark:#0D7F74;
+    --accent-soft:#E9F7F5;
+    --primary-soft:#EDF3F7;
+    --ink:#17212B;
+    --muted:#66727D;
+    --line:#DCE4EA;
+    --surface:#FFFFFF;
+    --page:#F3F6F8;
+    --danger:#C93B4B;
+    --danger-soft:#FDECEF;
+    --warn:#D8A73C;
+    --warn-soft:#FFF6E0;
+    --shadow:0 22px 60px rgba(24,59,86,.10);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+    min-height:100vh;
+    padding:28px 16px;
+    background:
+        radial-gradient(circle at 8% 0%, rgba(22,163,148,.07), transparent 28%),
+        radial-gradient(circle at 95% 8%, rgba(24,59,86,.07), transparent 24%),
+        var(--page);
+    color:var(--ink);
+    font-family:"DM Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:12px;
+}
+
+.app{max-width:1080px;margin:auto}
+
+.controls{
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+}
+.btn{
+    padding:11px 20px;
+    border-radius:10px;
+    font-weight:700;
+    font-size:13px;
+    border:1px solid transparent;
+    cursor:pointer;
+}
+.btn-outline{background:#fff;color:var(--ink);border-color:var(--line)}
+.btn-outline:hover{border-color:#B9C6D0}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-2)}
+
+.sheet{
+    background:#fff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:26px;
+    position:relative;
+}
+.sheet.page2{margin-top:26px}
+.sheet::before{
+    content:"";
+    display:block;
+    height:6px;
+    background:linear-gradient(90deg,var(--primary) 0 78%,var(--accent) 78% 100%);
+}
+.inner{padding:26px 32px 24px}
+
+.header{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:5px;
+    border-bottom:2px solid var(--primary);
+    padding-bottom:5px;
+}
+.brand-text .name{font-family:"Playfair Display",serif;font-weight:800;font-size:24px;line-height:1.15;color:var(--primary);letter-spacing:.02em}
+.brand-text .tagline{font-style:italic;color:var(--accent-dark);font-size:11.5px;margin-top:2px;line-height:1.2}
+.brand-text .contact{color:var(--muted);font-size:10.5px;margin-top:4px;line-height:1.4}
+
+.title-block{
+    text-align:left;
+    width:100%;
+    padding-top:8px;
+    border-top:1px solid var(--line);
+}
+.title-block .eyebrow{font-size:10px;font-weight:800;letter-spacing:.14em;color:var(--accent-dark);text-transform:uppercase;line-height:1.2}
+.title-block h1{font-family:"Playfair Display",serif;font-size:26px;line-height:1.15;color:var(--primary);letter-spacing:-.5px;margin-top:2px}
+.title-block .formname{font-size:12.5px;font-weight:700;color:var(--muted);margin-top:2px;line-height:1.2}
+.labno{margin-top:6px;display:inline-flex;align-items:center;gap:6px;background:var(--primary-soft);border-radius:8px;padding:5px 10px}
+.labno label{font-size:10px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;line-height:1.2}
+.labno input{border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:12px;line-height:1.2;width:130px;font-weight:700;color:var(--primary)}
+
+.patient-bar{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:4px 14px;
+    padding:6px 0;
+    border-bottom:1px solid var(--line);
+}
+.patient-bar .field.wide{grid-column:span 2}
+.field label{display:block;font-size:9.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;line-height:1.2}
+.field input, .field textarea{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:6px 8px;
+    font-size:12px;
+    line-height:1.2;
+    font-family:inherit;
+    color:var(--ink);
+}
+.field textarea{resize:vertical;min-height:24px}
+
+.section-title{
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:#fff;
+    background:linear-gradient(90deg,var(--primary),var(--primary-2));
+    padding:8px 12px;
+    line-height:1.2;
+    border-radius:8px;
+    margin:5px 0 3px;
+}
+.subgroup{
+    font-size:10.5px;
+    font-weight:800;
+    color:var(--accent-dark);
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    margin:4px 0 1px;
+    padding:3px 8px;
+    line-height:1.2;
+    background:var(--accent-soft);
+    border-left:3px solid var(--accent-dark);
+    border-radius:3px;
+}
+
+.cols-2{display:grid;grid-template-columns:1fr 1fr;gap:0 20px}
+.cols-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 18px}
+
+table.test-table{width:100%;border-collapse:collapse;table-layout:fixed}
+table.test-table td{
+    padding:1.5px 4px;
+    font-size:11px;
+    line-height:1.15;
+    vertical-align:middle;
+    border-bottom:1px solid #F0F2F5;
+}
+table.test-table td.tn{width:42%;color:var(--ink)}
+table.test-table td.tv{width:62px;position:relative}
+table.test-table td.tv input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:3px 15px 3px 3px;
+    font-size:10.5px;
+    line-height:1.15;
+    text-align:center;
+}
+table.test-table td.tv .flag{
+    position:absolute;
+    top:2px;
+    right:3px;
+    font-size:9px;
+    font-weight:800;
+    pointer-events:none;
+}
+table.test-table td.tv .flag.high{color:var(--danger)}
+table.test-table td.tv .flag.low{color:var(--danger)}
+table.test-table td.tr-val{
+    color:var(--muted);
+    font-size:8.5px;
+    line-height:1.15;
+    text-align:right;
+    white-space:normal;
+    word-break:break-word;
+    padding-left:4px;
+}
+
+input.out-of-range{
+    border-color:var(--danger)!important;
+    background:var(--danger-soft)!important;
+    color:var(--danger)!important;
+    font-weight:700!important;
+}
+input.low-range{
+    border-color:var(--danger)!important;
+    background:var(--danger-soft)!important;
+    color:var(--danger)!important;
+    font-weight:700!important;
+}
+input.warn-yellow{
+    border-color:#D8A73C!important;
+    background:#FFF6E0!important;
+    color:#8A6A1B!important;
+    font-weight:700!important;
+}
+
+table.test-table.two-col td.tn{width:60%}
+table.test-table.two-col td.tv{width:auto}
+
+table.grid-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:4px}
+table.grid-table th{
+    background:var(--primary-soft);
+    color:var(--primary);
+    font-size:9.5px;
+    line-height:1.2;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    padding:4px 8px;
+    text-align:left;
+    border:1px solid var(--line);
+}
+table.grid-table td{
+    padding:2px 6px;
+    font-size:11px;
+    line-height:1.15;
+    border:1px solid var(--line);
+}
+table.grid-table td input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:2px 5px;
+    font-size:11px;
+    line-height:1.15;
+    text-align:center;
+}
+
+.abx-table{font-size:10.5px}
+.abx-table th, .abx-table td{padding:2.5px 7px;line-height:1.25}
+.abx-table td select{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:1px 3px;
+    font-size:10.5px;
+    line-height:1.2;
+    text-align:center;
+    background:#fff;
+}
+select.sens-r{color:var(--danger);font-weight:700}
+
+.two-field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0 1px}
+
+.note{font-size:10px;color:var(--muted);font-style:italic;margin-top:3px}
+.legend{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:10px;color:var(--muted);margin:4px 0}
+.legend .item{display:flex;align-items:center;gap:6px}
+.legend .swatch{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+.footer-strip{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:14px;
+    margin-top:4px;
+    padding-top:4px;
+    border-top:1px solid var(--line);
+}
+
+@media print{
+    body{background:#fff;padding:0;font-size:11px}
+    .app{max-width:100%}
+    .controls, .legend{display:none!important}
+    .sheet{box-shadow:none;border-radius:0;margin-bottom:0}
+    .sheet.page2{page-break-before:always;margin-top:0}
+    .inner{padding:16px 20px 10px}
+    input, textarea, select{
+        border:1px solid #7A8794!important;
+        background:transparent!important;
+    }
+    input.out-of-range{border-color:var(--danger)!important;background:var(--danger-soft)!important}
+    input.low-range{border-color:var(--danger)!important;background:var(--danger-soft)!important}
+    input.warn-yellow{border-color:#D8A73C!important;background:#FFF6E0!important}
+    select.sens-r{color:var(--danger)!important;font-weight:700!important}
+    @page{size:A4;margin:10mm}
+}
+@media screen and (max-width:760px){
+    .patient-bar{grid-template-columns:1fr 1fr}
+    .cols-2, .cols-3{grid-template-columns:1fr}
+    .footer-strip{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+    <div class="controls no-print">
+        <button class="btn btn-outline" onclick="resetForm()">Reset</button>
+        <button class="btn btn-primary" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+
+    <div class="sheet page1">
+        <div class="inner">
+            <div class="header">
+                <div class="brand-text">
+                    <div class="name">RAYMINE HOSPITAL LIMITED</div>
+                    <div class="tagline">Compassionate Care, Trusted Health.</div>
+                    <div class="contact">
+                        Plot 3 Chimchu Court, Besides Habitat Xclusive Inn, OPP Rivers State Fire Service Rumuodomaya, Port Harcourt.<br>
+                        0707 552 9758 &nbsp;|&nbsp; rayminehospital@gmail.com &nbsp;|&nbsp; www.rayminehealth.com
+                    </div>
+                </div>
+                <div class="title-block">
+                    <div class="eyebrow">Laboratory Investigations</div>
+                    <h1>REPORT</h1>
+                    <div class="formname">Microbiology &amp; Parasitology</div>
+                    <div class="labno">
+                        <label>Patient ID / Lab No.</label>
+                        <input type="text" id="labNo1" placeholder="e.g. RHL/S/0024" oninput="syncField(this,'labNo2')">
+                    </div>
+                </div>
+            </div>
+
+            <div class="patient-bar">
+                <div class="field wide"><label>Patient's Name</label><input type="text" id="pName1" oninput="syncField(this,'pName2')"></div>
+                <div class="field"><label>Age</label><input type="text" id="pAge1" oninput="syncField(this,'pAge2')"></div>
+                <div class="field"><label>Sex</label><input type="text" id="pSex1" oninput="syncField(this,'pSex2')"></div>
+                <div class="field wide"><label>Address / Phone No.</label><input type="text" id="pAddr1" oninput="syncField(this,'pAddr2')"></div>
+                <div class="field"><label>Test Date &amp; Time</label><input type="datetime-local" id="pDate1" oninput="syncField(this,'pDate2')"></div>
+                <div class="field"><label>Specimen</label><input type="text" placeholder="Urine/Stool/Sputum/Swab"></div>
+                <div class="field wide"><label>Diagnosis / Clinical Notes</label><input type="text" id="pDx1" oninput="syncField(this,'pDx2')"></div>
+            </div>
+
+            <div class="legend">
+                <div class="item"><span class="swatch" style="background:var(--danger-soft);border:1px solid var(--danger)"></span> Positive result</div>
+            </div>
+
+            <div class="section-title">Microbiology &amp; Parasitology</div>
+
+            <div class="cols-3">
+                <div>
+                    <div class="subgroup">Urine</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Appearance</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Blood</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                        <tr><td class="tn">Urobilinogen</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                        <tr><td class="tn">Bilirubin</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                        <tr><td class="tn">Specific Gravity</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Protein</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                        <tr><td class="tn">Nitrite</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                        <tr><td class="tn">Ketone</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                        <tr><td class="tn">Ascorbic Acid</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Glucose</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                        <tr><td class="tn">pH</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                    <div class="subgroup" style="margin-top:6px">Urine Microscopy</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Epithelial Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Pus Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Bacteria</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Crystals</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Casts</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">R.B.C.S.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Others</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Culture</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                </div>
+
+                <div>
+                    <div class="subgroup">Faeces</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Appearance</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Colour</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Worm Segments</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Mucus</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Blood</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                    </table>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Culture</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Occult Blood</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                    </table>
+
+                    <div class="subgroup" style="margin-top:6px">Sputum</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Appearance</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Pus Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.P.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.N.R.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">A.F.B.</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                        <tr><td class="tn">Culture</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                </div>
+
+                <div>
+                    <div class="subgroup">Swabs (MC&amp;S)</div>
+                    <table class="test-table two-col">
+                        <tr><td class="tn">Epithelial Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Yeast Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Pus Cells</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">T. Vaginalis</td><td class="tv"><input type="text" oninput="checkPositive(this)"></td></tr>
+                        <tr><td class="tn">R.B.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.P.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.N.D.P.C.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">G.N.R.</td><td class="tv"><input type="text"></td></tr>
+                        <tr><td class="tn">Culture</td><td class="tv"><input type="text"></td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sheet page2">
+        <div class="inner">
+            <div class="header">
+                <div class="brand-text">
+                    <div class="name">RAYMINE HOSPITAL LIMITED</div>
+                    <div class="tagline">Compassionate Care, Trusted Health.</div>
+                    <div class="contact">
+                        Plot 3 Chimchu Court, Besides Habitat Xclusive Inn, OPP Rivers State Fire Service Rumuodomaya, Port Harcourt.<br>
+                        0707 552 9758 &nbsp;|&nbsp; rayminehospital@gmail.com &nbsp;|&nbsp; www.rayminehealth.com
+                    </div>
+                </div>
+                <div class="title-block">
+                    <div class="eyebrow">Laboratory Investigations</div>
+                    <h1>REPORT</h1>
+                    <div class="formname">Microbiology &amp; Parasitology &ndash; Antibiotic Sensitivity</div>
+                    <div class="labno">
+                        <label>Patient ID / Lab No.</label>
+                        <input type="text" id="labNo2" placeholder="e.g. RHL/S/0024" oninput="syncField(this,'labNo1')">
+                    </div>
+                </div>
+            </div>
+
+            <div class="patient-bar">
+                <div class="field wide"><label>Patient's Name</label><input type="text" id="pName2" oninput="syncField(this,'pName1')"></div>
+                <div class="field"><label>Age</label><input type="text" id="pAge2" oninput="syncField(this,'pAge1')"></div>
+                <div class="field"><label>Sex</label><input type="text" id="pSex2" oninput="syncField(this,'pSex1')"></div>
+                <div class="field wide"><label>Address / Phone No.</label><input type="text" id="pAddr2" oninput="syncField(this,'pAddr1')"></div>
+                <div class="field"><label>Test Date &amp; Time</label><input type="datetime-local" id="pDate2" oninput="syncField(this,'pDate1')"></div>
+                <div class="field"><label>Specimen</label><input type="text" placeholder="Urine/Stool/Sputum/Swab"></div>
+                <div class="field wide"><label>Diagnosis / Clinical Notes</label><input type="text" id="pDx2" oninput="syncField(this,'pDx1')"></div>
+            </div>
+
+            <div class="section-title">Antibiotic Sensitivity</div>
+            <div class="cols-2">
+                <table class="grid-table abx-table" id="abxTable1">
+                    <tr><th>Antibiotic</th><th>Org. 1</th><th>Org. 2</th></tr>
+                </table>
+                <table class="grid-table abx-table" id="abxTable2">
+                    <tr><th>Antibiotic</th><th>Org. 1</th><th>Org. 2</th></tr>
+                </table>
+            </div>
+            <div class="note">S = Sensitive &nbsp;&nbsp; R = Resistant</div>
+
+            <div class="field" style="margin-top:10px">
+                <label>Comments</label>
+                <textarea rows="2"></textarea>
+            </div>
+
+            <div class="note">This test result only accounts for this test sample.</div>
+
+            <div class="footer-strip">
+                <div class="field"><label>Date</label><input type="date"></div>
+                <div class="field"><label>Assayed By</label><input type="text"></div>
+                <div class="field"><label>Med Lab Scientist</label><input type="text"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function syncField(source, targetId){
+    const target = document.getElementById(targetId);
+    if(target && target.value !== source.value) target.value = source.value;
+}
+
+function checkPositive(input){
+    const v = input.value.trim().toLowerCase();
+    input.classList.remove('out-of-range');
+    if(v === 'positive' || v === 'pos' || v === 'present' || v.startsWith('+')){
+        input.classList.add('out-of-range');
+    }
+}
+
+const ANTIBIOTICS = [
+    "Sparfloxacin","Amoxycilline","Chloramphenicol","Levofloxacin","Ceporex (Cephalexin)",
+    "L-Flox","Ampiclox","Ampicillin","Ofloxacin","Augmentin","Tarivid","Gentamicin",
+    "Nalidixic Acid","Rifampin","Erythromycin","Norfloxacin","Ciproxin (Ciprofloxacin)",
+    "Peflaxin (Pefloxacin)","Streptomycin","Septrin","Cefuroxime","Ceftazidime",
+    "Azithromycin","Ceftriaxone"
+];
+
+function markResistant(select){
+    select.classList.toggle('sens-r', select.value === 'R');
+}
+
+function sensSelect(){
+    return `<select onchange="markResistant(this)"><option value=""></option><option value="S">S</option><option value="R">R</option></select>`;
+}
+
+(function buildAbxTable(){
+    const table1 = document.getElementById("abxTable1");
+    const table2 = document.getElementById("abxTable2");
+    const half = Math.ceil(ANTIBIOTICS.length / 2);
+    ANTIBIOTICS.forEach((name, i) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${name}</td><td>${sensSelect()}</td><td>${sensSelect()}</td>`;
+        (i < half ? table1 : table2).appendChild(tr);
+    });
+})();
+
+document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('input[oninput*="checkPositive"]').forEach(checkPositive);
+});
+
+function resetForm(){
+    document.querySelectorAll("input[type=text], input[type=date], input[type=datetime-local], textarea").forEach(el => el.value = "");
+    document.querySelectorAll("select").forEach(el => { el.value = ""; el.classList.remove('sens-r'); });
+    document.querySelectorAll("input.out-of-range").forEach(el => el.classList.remove('out-of-range'));
+}
+</script>
+</body>
+</html>
